@@ -6,18 +6,28 @@ class App extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.state = { lat: null }; // value of lat hasn't been defined yet
+		this.state = { lat: null, errorMessage: '' }; // value of lat hasn't been defined yet
 
 		window.navigator.geolocation.getCurrentPosition(
 			(position) => {
 				this.setState({ lat: position.coords.latitude });
 			}, //success callback
-			(err) => console.log(err),
+			(err) => {
+				this.setState({ errorMessage: err.message });
+			},
 		);
 	}
 	// render() must be defined
 	render() {
-		return <div>Latitude: {this.state.lat} </div>;
+		if (this.state.errorMessage && !this.state.lat) {
+			return <div>Error: {this.state.errorMessage}</div>;
+		}
+
+		if (!this.state.errorMessage && this.state.lat) {
+			return <div>Latitude: {this.state.lat}</div>;
+		}
+
+		return <div>Loading...</div>;
 	}
 }
 
