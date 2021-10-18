@@ -11,10 +11,13 @@ const getSeason = (lat, month) => {
 const SeasonDisplay = (props) => {
 	const season = getSeason(props.lat, new Date().getMonth());
 	const displayText = season === 'winter' ? "It's Winter ❄" : "It's Summer 😎";
+	const icon = season === 'winter' ? 'snowflake' : 'sun'; // snowflake & sun from Semantic UI
 
 	return (
 		<div>
+			<i className={`${icon} icon`} />
 			<h1>{displayText}</h1>
+			<i className={`${icon} icon`} />
 		</div>
 	);
 };
